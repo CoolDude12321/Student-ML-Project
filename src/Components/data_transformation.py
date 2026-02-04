@@ -35,6 +35,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from src.exception import CustomException
 from src.logger import logging
+from src.utils import save_object
 
 
 # =============================================
@@ -139,6 +140,11 @@ class DataTransformation:
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             logging.info("Saved preprocessing object.")
+
+            save_object(
+                file_path=self.data_transformation_config.preprocessor_obj_file_path,
+                obj=preprocessor_obj
+            )
 
             return (
                 train_arr,
