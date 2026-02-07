@@ -61,6 +61,10 @@ class ModelTrainerConfig:
 # This class contains methods to train and evaluate multiple regression models.
 # It selects the best-performing model based on R2 score and saves it to a specified file path.
 # =============================================
+@dataclass
+class ModelTrainerConfig:
+    trained_model_file_path=os.path.join("artifacts","model.pkl")
+
 class ModelTrainer:
     def __init__(self):
         self.model_trainer_config=ModelTrainerConfig()
@@ -92,7 +96,6 @@ class ModelTrainer:
                 },
                 "Random Forest":{
                     # 'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-                 
                     # 'max_features':['sqrt','log2',None],
                     'n_estimators': [8,16,32,64,128,256]
                 },
@@ -119,7 +122,6 @@ class ModelTrainer:
                     # 'loss':['linear','square','exponential'],
                     'n_estimators': [8,16,32,64,128,256]
                 }
-                
             }
 
             model_report:dict=evaluate_models(X_train=X_train,y_train=y_train,X_test=X_test,y_test=y_test,
@@ -129,7 +131,6 @@ class ModelTrainer:
             best_model_score = max(sorted(model_report.values()))
 
             ## To get best model name from dict
-
             best_model_name = list(model_report.keys())[
                 list(model_report.values()).index(best_model_score)
             ]
@@ -145,9 +146,8 @@ class ModelTrainer:
             )
 
             predicted=best_model.predict(X_test)
-
             r2_square = r2_score(y_test, predicted)
             return r2_square
-                  
+                
         except Exception as e:
             raise CustomException(e,sys)
