@@ -12,6 +12,7 @@
 # Flask for creating the web application and handling requests
 # Numpy for numerical operations
 # Pandas for data manipulation and analysis
+# OS for interacting with the operating system
 # StandardScaler for feature scaling
 # src.Pipeline.predict_pipeline for the CustomData class and PredictPipeline class to handle data input and prediction logic
 # =============================================
@@ -19,6 +20,7 @@ import pickle
 from flask import Flask, request, render_template
 import numpy as np
 import pandas as pd
+import os
 
 from sklearn.preprocessing import StandardScaler
 from src.Pipeline.predict_pipeline import CustomData, PredictPipeline 
@@ -59,6 +61,7 @@ def predict_datapoint():
         predict_pipeline = PredictPipeline()
         results = predict_pipeline.predict(pred_df)
         return render_template('home.html', results=results[0])
-    
+
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
