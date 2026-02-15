@@ -12,13 +12,11 @@
 # OS Library for interacting with the operating system
 # SYS Library for system-specific parameters and functions
 # Dataclasses for creating data classes to manage configuration
-# CatBoostRegressor for gradient boosting on decision trees
 # Sklearn's ensemble methods for various regression algorithms like RandomForest, AdaBoost, GradientBoosting
 # Sklearn's linear_model for Linear Regression
 # Sklearn's metrics for evaluating model performance
 # Sklearn's neighbors for K-Nearest Neighbors regression
 # Sklearn's tree for Decision Tree regression
-# XGBoost for extreme gradient boosting regression
 # src.exception for custom exception handling
 # src.logger for logging information during execution
 # src.utils for utility functions like saving objects and evaluating models
@@ -27,7 +25,6 @@ import os
 import sys
 from dataclasses import dataclass
 
-from catboost import CatBoostRegressor
 from sklearn.ensemble import (
     AdaBoostRegressor,
     GradientBoostingRegressor,
@@ -37,7 +34,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
-from xgboost import XGBRegressor
 
 from src.exception import CustomException
 from src.logger import logging
@@ -82,8 +78,6 @@ class ModelTrainer:
                 "Decision Tree": DecisionTreeRegressor(),
                 "Gradient Boosting": GradientBoostingRegressor(),
                 "Linear Regression": LinearRegression(),
-                "XGBRegressor": XGBRegressor(),
-                "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor(),
             }
 
@@ -122,15 +116,6 @@ class ModelTrainer:
                 # XGBRegressor(eXtreme Gradient Boosting) is an optimized gradient boosting library that does same thing as Gradient Boosting but is designed for speed and performance.
                 # We use both Gradient Boosting and XGBRegressor to compare their performance and select the best one for our dataset.
                 # Same as XGBRegressor, we also use CatBoosting Regressor and AdaBoost Regressor to compare their performance and select the best one for our dataset.
-                "XGBRegressor":{
-                    'learning_rate':[.1,.01,.05,.001],
-                    'n_estimators': [8,16,32,64,128,256]
-                },
-                "CatBoosting Regressor":{
-                    'depth': [6,8,10],
-                    'learning_rate': [0.01, 0.05, 0.1],
-                    'iterations': [30, 50, 100]
-                },
                 "AdaBoost Regressor":{
                     'learning_rate':[.1,.01,0.5,.001],
                     # 'loss':['linear','square','exponential'],
